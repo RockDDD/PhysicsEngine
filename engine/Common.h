@@ -3,6 +3,37 @@
 #include <cfloat>
 #include <stdint.h>
 
+inline float CorrectDegrees(float degrees)
+{
+	while (degrees > 360.0f)
+	{
+		degrees -= 360.0f;
+	}
+	while (degrees < -360.0f)
+	{
+		degrees += 360.0f;
+	}
+	return degrees;
+}
+
+#ifndef RAD2DEG
+inline float RAD2DEG(float radians)
+{
+	float degrees = radians * 57.295754f;
+	degrees = CorrectDegrees(degrees);
+	return degrees;
+}
+#endif
+
+#ifndef DEG2RAD
+inline float DEG2RAD(float degrees)
+{
+	degrees = CorrectDegrees(degrees);
+	float radians = degrees * 0.0174533f;
+	return radians;
+}
+#endif
+
 inline bool AlmostEqualRelativeAndAbs(float A, float B, float maxDiff, float maxRelDiff = FLT_EPSILON)
 {
 	// Check if the numbers are really close -- needed when comparing numbers near zero.
